@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/style.css">
+
+</head>
+<body class="sign_body">  
+    <div class="container_s">
+        <div class="glass">
+            <div class="signup">
+                <form  id="signUpForm" class="signup_form">
+            
+                    <h2 class="sign_h2">ثبت نام</h2>
+            
+                    <input type="text" name="username" id="username" placeholder="نام کاربری" class="input1" required>
+                    
+                    <input type="password" name="password" id="password" placeholder="پسورد" class="input1"required>
+                    <input type="email" name="email" id="email" placeholder="ایمیل" class="input1" required>
+
+                    <button class="btn" id="signUp-btn" type="submit">
+                        <p>ثبت نام</p>
+                    </button>
+                    <div class="before">
+                        <p>قبلا ثبت نام کردید؟  </p>
+                        <a href="{{url_for('login')}}">  ورود</a>
+
+                    </div>
+                </form>
+            
+            </div>
+        </div>
+    </div>
+    
+    
+
+<script>
+    document.getElementById('signUpForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const data = {
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value,
+            email: document.getElementById('email').value
+        };
+        
+        const response = await fetch('/signUp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        if (response.ok) {
+            alert(result.message);
+            window.location.href = '/login';  // Redirect to login page
+        } else {
+            alert(result.error);
+        }
+    });
+</script>
+
+
+</body>
+</html>
